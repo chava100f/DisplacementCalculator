@@ -1,0 +1,52 @@
+.boton-gral{
+    -fx-background-color: #303030;
+    -fx-text-fill: #f0f0f0;
+    -fx-border-color: #fff;
+    -fx-border-width: 2 2 2 2;
+    -fx-font: 20px "Bebas Neue Normal";
+}
+.boton-gral:hover{
+    -fx-background-color: #707070;
+}
+
+.boton-gral:pressed{
+    -fx-background-color: #fdfdfd;
+    -fx-text-fill: #000;
+}
+
+#boton-Grande{
+    -fx-font: 48px "Bebas Neue Normal";
+}
+
+.boton-left-side-menu{
+    -fx-background-color: #303030;
+    -fx-text-fill: #f0f0f0;
+    -fx-font: 15px "Bebas Neue Normal";
+}
+
+.boton-left-side-menu:hover{
+    -fx-background-color: #707070;
+}
+
+.boton-left-side-menu:pressed{
+    -fx-background-color: #fdfdfd;
+    -fx-text-fill: #000;
+}
+
+.label-gral{
+    -fx-text-fill: #f0f0f0;
+    -fx-font: 15px "Bebas Neue Normal";
+}
+
+.label-titulo{
+    -fx-text-fill: #f0f0f0;
+    -fx-font: 32px "Bebas Neue Normal";
+}
+
+.gral-background{
+    -fx-background-color: #303030;
+}
+
+.top-background{
+    -fx-background-color: #EAEAEA;
+}
