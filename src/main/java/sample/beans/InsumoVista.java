@@ -6,15 +6,11 @@ import java.util.List;
 public class InsumoVista {
 
     private List<Nodo> lstNods;
-    private List<Elemento> listElements;
+    private List<Elemento> lstElements;
 
-    public InsumoVista(List<Nodo> lstNods, List<Elemento> listElements) {
-        this.lstNods = lstNods;
-        this.listElements = listElements;
-    }
     public InsumoVista() {
         this.lstNods =  new ArrayList<>();
-        this.listElements = new ArrayList<>();
+        this.lstElements = new ArrayList<>();
     }
 
     public List<Nodo> getLstNods() {
@@ -25,19 +21,19 @@ public class InsumoVista {
         this.lstNods = lstNods;
     }
 
-    public List<Elemento> getListElements() {
-        return listElements;
+    public List<Elemento> getLstElements() {
+        return lstElements;
     }
 
-    public void setListElements(List<Elemento> listElements) {
-        this.listElements = listElements;
+    public void setLstElements(List<Elemento> lstElements) {
+        this.lstElements = lstElements;
     }
 
     @Override
     public String toString() {
         return "InusmoVista{" +
                 "lstNods=" + lstNods +
-                ", listElements=" + listElements +
+                ", lstElements=" + lstElements +
                 '}';
     }
 }

@@ -3,15 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="gral-background" stylesheets="@../css/EstiloGeneral.css" xmlns="http://javafx.com/javafx/10.0.2-internal">
-   <children>
-      <Label text="ELEMENTOS" styleClass="label-titulo" />
-      <TableView prefHeight="200.0" prefWidth="200.0">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="890.0" styleClass="gral-background" stylesheets="@../css/EstiloGeneral.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ElementosController">
+      <Label styleClass="label-titulo" text="ELEMENTOS" />
+      <TableView fx:id="elementosTable" prefHeight="200.0" prefWidth="200.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn fx:id="numElementoColumn" prefWidth="150.0" text="Número" />
+            <TableColumn fx:id="tipoColumn" prefWidth="150.0" text="Tipo" />
+            <TableColumn fx:id="materialColumn" prefWidth="150.0" text="Material" />
+            <TableColumn fx:id="node1Column" prefWidth="150.0" text="Node 1" />
+            <TableColumn fx:id="node2Column" prefWidth="150.0" text="Nodo 2" />
          </columns>
       </TableView>
-   </children>
 </VBox>

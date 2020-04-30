@@ -1,5 +1,6 @@
 package sample.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,27 +12,37 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javafx.scene.input.MouseEvent;
-import org.apache.poi.util.SystemOutLogger;
+import sample.Main;
+import sample.beans.Elemento;
+import sample.beans.InsumoVista;
+import sample.beans.Nodo;
+import sample.service.ExcelReaderService;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    private GridPane gridCenter;
+    private ExcelReaderService readerService = new ExcelReaderService();
+    private InsumoVista insumoVista = new InsumoVista();
+    private String rutaArchivo = "Ruta del Archivo";
+
+    private ObservableList<Nodo> nodoData = FXCollections.observableArrayList();
+    private ObservableList<Elemento> elementoData = FXCollections.observableArrayList();
+
     @FXML
     BorderPane borderPane1;
 
     @FXML
-    Button clearButton;
+    Button botonLeeArchivo;
 
-    private String valor;
-
-    GridPane gridCenter;
-    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -44,48 +55,112 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void clear(MouseEvent event){
+    private void leeArchivo(MouseEvent event){
 
-        gridCenter = (GridPane) borderPane1.getCenter();
-        ObservableList<Node> obs = gridCenter.getChildren();
-        HBox hbox1 = (HBox) obs.get(0);
 
-        ObservableList<Node> obs2 =  hbox1.getChildren();
-        Label label = (Label)  obs2.get(0);
-        setValor(label.getText());
+        if(borderPane1.getCenter() != null ){
+            try {
+                gridCenter = (GridPane) borderPane1.getCenter();
+            }catch(ClassCastException cce){
+                gridCenter =null;
+            }
+            if(gridCenter != null) {
+                ObservableList<Node> obs = gridCenter.getChildren();
+                HBox hbox1 = (HBox) obs.get(0);
 
+                ObservableList<Node> obs2 = hbox1.getChildren();
+                Label label = (Label) obs2.get(0);
+                setRutaArchivo(label.getText());
+            }
+
+        }
+
+        if(rutaArchivo!= null) {
+            try {
+                insumoVista = readerService.leeArchivo(new File(rutaArchivo).getPath());
+            } catch (IOException e) {
+                System.out.println("Error al leer el archivo");
+            }
+
+            if (insumoVista != null) {
+                if (insumoVista.getLstNods() != null && !insumoVista.getLstNods().isEmpty()) {
+                    nodoData.addAll(insumoVista.getLstNods());/* getItems().setAll(getNodos(insumoVista));*/
+                }
+
+                if (insumoVista.getLstElements() != null && !insumoVista.getLstElements().isEmpty()) {
+                    elementoData.addAll(insumoVista.getLstElements());
+                    /*tablaElementos.setItems(getElementos(insumoVista));*/
+                }
+            }
+
+            /*inicializaTablas(insumoVista);*/
+        }
     }
 
     @FXML
-    private void archivoLoadScene(MouseEvent event){loadUI("Archivo"); }
+    private void archivoLoadScene(MouseEvent event){loadUI("Archivo", "ArchivoController"); }
 
     @FXML
     private void nodosLoadScene(MouseEvent event){
-        loadUI("Nodos");
+        loadUI("Nodos", "NodosController");
     }
 
     @FXML
     private void elementosLoadScene(MouseEvent event){
-        loadUI("Elementos");
+        loadUI("Elementos", "ElementosController");
     }
 
-    private void loadUI(String ui){
+    private void loadUI(String ui, String controller){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/"+ui+".fxml"));
-        } catch (IOException e) {
+
+            FXMLLoader loader = new FXMLLoader();
+
+            loader.setLocation(Main.class.getResource("/fxml/"+ui+".fxml"));
+
+            switch(controller.trim()) {
+
+                case "ElementosController": {
+                    root = (VBox) loader.load();
+                    borderPane1.setCenter(root);
+                    ElementosController eController = loader.getController();
+                    eController.setElementoData(elementoData);
+                }
+                break;
+
+                case "NodosController": {
+                    root = (VBox) loader.load();
+                    borderPane1.setCenter(root);
+                    NodosController nController = loader.getController();
+                    nController.setNodoData(nodoData);
+                }
+                break;
+
+                case "ArchivoController": {
+                    root = (GridPane) loader.load();
+                    borderPane1.setCenter(root);
+                    ArchivoController aController = loader.getController();
+                    aController.setFileRute(this.getRutaArchivo());
+                }
+                break;
+            }
+        } catch (IOException | ClassCastException e) {
             e.printStackTrace();
         }
+
         borderPane1.setCenter(root);
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
-        System.out.println("valor!! ->" + this.valor);
-        clearButton.setText(this.valor);
+    public void setRutaArchivo(String valor) {
+        this.rutaArchivo = valor;
+        System.out.println("rutaArchivo!! ->" + this.rutaArchivo);
     }
 
-    public String getValor() {
-        return valor;
+    public String getRutaArchivo() {
+        return this.rutaArchivo;
+    }
+
+    public InsumoVista getInsumoVista(){
+        return insumoVista;
     }
 }

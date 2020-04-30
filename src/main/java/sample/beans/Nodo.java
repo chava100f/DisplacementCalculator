@@ -2,25 +2,28 @@ package sample.beans;
 
 public class Nodo {
 
-    private String numElemento;
+    private String numNodo;
     private String x; //en metros
     private String y; //en metros
     private String z; //en metros
 
 
-    public Nodo(String numElemento, String x, String y, String z) {
-        this.numElemento = numElemento;
+    public Nodo(String numNodo, String x, String y, String z) {
+        this.numNodo = numNodo;
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public String getNumElemento() {
-        return numElemento;
+    public Nodo() {
     }
 
-    public void setNumElemento(String numElemento) {
-        this.numElemento = numElemento;
+    public String getNumNodo() {
+        return numNodo;
+    }
+
+    public void setNumNodo(String numNodo) {
+        this.numNodo = numNodo;
     }
 
     public String getX() {
@@ -50,7 +53,7 @@ public class Nodo {
     @Override
     public String toString() {
         return "Nodo{" +
-                "numElemento='" + numElemento + '\'' +
+                "numNodo='" + numNodo + '\'' +
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", z='" + z + '\'' +
