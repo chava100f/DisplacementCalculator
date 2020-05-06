@@ -22,7 +22,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11">
-      <module name="DisplacementCalculator" target="11" />
+      <module name="DisplacementCalculator" target="1.11" />
     </bytecodeTargetLevel>
   </component>
 </project>

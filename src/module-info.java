@@ -5,4 +5,7 @@ module DisplacementCalculator {
     requires javafx.base;
 
     opens sample;
+    opens sample.beans;
+    opens sample.controllers;
+    opens sample.service;
 }

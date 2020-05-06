@@ -20,6 +20,7 @@ import sample.Main;
 import sample.beans.Elemento;
 import sample.beans.InsumoVista;
 import sample.beans.Nodo;
+import sample.service.AnalizadorService;
 import sample.service.ExcelReaderService;
 
 import java.io.File;
@@ -31,6 +32,7 @@ public class MainController implements Initializable {
 
     private GridPane gridCenter;
     private ExcelReaderService readerService = new ExcelReaderService();
+    private AnalizadorService analizadorService = new AnalizadorService();
     private InsumoVista insumoVista = new InsumoVista();
     private String rutaArchivo = "Ruta del Archivo";
 
@@ -55,7 +57,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void leeArchivo(MouseEvent event){
+    private void leeArchivo(){
 
 
         if(borderPane1.getCenter() != null ){
@@ -95,6 +97,10 @@ public class MainController implements Initializable {
 
             /*inicializaTablas(insumoVista);*/
         }
+    }
+    @FXML
+    private void analizaArchivo(MouseEvent event) {
+        analizadorService.realizaAnalisis(insumoVista);
     }
 
     @FXML
