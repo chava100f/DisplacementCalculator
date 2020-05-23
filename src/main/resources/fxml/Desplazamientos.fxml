@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="890.0" styleClass="gral-background" stylesheets="@../css/EstiloGeneral.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.DesplazamientosController">
+      <Label styleClass="label-titulo" text="DESPLAZAMIENTOS" />
+      <TableView fx:id="desplazamientosTable" prefHeight="200.0" prefWidth="200.0">
+         <columns>
+            <TableColumn fx:id="nodeColumn" prefWidth="150.0" text="Node" />
+            <TableColumn fx:id="loadColumn" prefWidth="150.0" text="Load" />
+            <TableColumn fx:id="dxColumn" prefWidth="150.0" text="Dx (m)" />
+            <TableColumn fx:id="dyColumn" prefWidth="150.0" text="Dy (m)" />
+            <TableColumn fx:id="dzColumn" prefWidth="150.0" text="Dz (m)" />
+            <TableColumn fx:id="rxColumn" prefWidth="150.0" text="Rx (rad)" />
+            <TableColumn fx:id="ryColumn" prefWidth="150.0" text="Ry (rad)" />
+            <TableColumn fx:id="rzColumn" prefWidth="150.0" text="Rz (rad)" />
+         </columns>
+      </TableView>
+</VBox>

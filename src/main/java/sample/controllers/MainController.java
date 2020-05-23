@@ -16,7 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javafx.scene.input.MouseEvent;
+import org.apache.log4j.Logger;
 import sample.Main;
+import sample.beans.Desplazamiento;
 import sample.beans.Elemento;
 import sample.beans.InsumoVista;
 import sample.beans.Nodo;
@@ -30,6 +32,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    private final Logger log = Logger.getLogger(MainController.class);
+
     private GridPane gridCenter;
     private ExcelReaderService readerService = new ExcelReaderService();
     private AnalizadorService analizadorService = new AnalizadorService();
@@ -38,6 +42,7 @@ public class MainController implements Initializable {
 
     private ObservableList<Nodo> nodoData = FXCollections.observableArrayList();
     private ObservableList<Elemento> elementoData = FXCollections.observableArrayList();
+    private ObservableList<Desplazamiento> desplazamientosData = FXCollections.observableArrayList();
 
     @FXML
     BorderPane borderPane1;
@@ -51,7 +56,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void close(MouseEvent event){
+    private void close(){
         Stage stage = (Stage) borderPane1.getScene().getWindow();
         stage.close();
     }
@@ -59,6 +64,7 @@ public class MainController implements Initializable {
     @FXML
     private void leeArchivo(){
 
+        log.debug("[leeArchivo] Inicia");
 
         if(borderPane1.getCenter() != null ){
             try {
@@ -73,48 +79,67 @@ public class MainController implements Initializable {
                 ObservableList<Node> obs2 = hbox1.getChildren();
                 Label label = (Label) obs2.get(0);
                 setRutaArchivo(label.getText());
+                log.debug("[leeArchivo] Se obtiene ruta del archivo " + getRutaArchivo());
             }
 
         }
 
         if(rutaArchivo!= null) {
             try {
+                log.debug("[leeArchivo] Se lee el archivo");
                 insumoVista = readerService.leeArchivo(new File(rutaArchivo).getPath());
             } catch (IOException e) {
-                System.out.println("Error al leer el archivo");
+                log.error("Error al leer el archivo");
             }
 
             if (insumoVista != null) {
                 if (insumoVista.getLstNods() != null && !insumoVista.getLstNods().isEmpty()) {
+                    log.debug("[leeArchivo] Se pobla la lista de Nodos");
                     nodoData.addAll(insumoVista.getLstNods());/* getItems().setAll(getNodos(insumoVista));*/
                 }
 
                 if (insumoVista.getLstElements() != null && !insumoVista.getLstElements().isEmpty()) {
+                    log.debug("[leeArchivo] Se pobla la lista de Elementos");
                     elementoData.addAll(insumoVista.getLstElements());
-                    /*tablaElementos.setItems(getElementos(insumoVista));*/
+                }
+
+                if (insumoVista.getLstDesplazamientos() != null && !insumoVista.getLstDesplazamientos().isEmpty()) {
+                    log.debug("[leeArchivo] Se pobla la lista de Desplazamientos");
+                    System.out.println("[leeArchivo] Se pobla la lista de Desplazamientos");
+                    desplazamientosData.addAll(insumoVista.getLstDesplazamientos());
                 }
             }
-
-            /*inicializaTablas(insumoVista);*/
         }
     }
     @FXML
-    private void analizaArchivo(MouseEvent event) {
+    private void analizaArchivo() {
         analizadorService.realizaAnalisis(insumoVista);
     }
 
     @FXML
-    private void archivoLoadScene(MouseEvent event){loadUI("Archivo", "ArchivoController"); }
+    private void archivoLoadScene(){
+        log.debug("[archivoLoadScene] Se carga la pantalla de Archivo");
+        loadUI("Archivo", "ArchivoController");
+    }
 
     @FXML
-    private void nodosLoadScene(MouseEvent event){
+    private void nodosLoadScene(){
+        log.debug("[nodosLoadScene] Se carga la pantalla de Nodos");
         loadUI("Nodos", "NodosController");
     }
 
     @FXML
-    private void elementosLoadScene(MouseEvent event){
+    private void elementosLoadScene(){
+        log.debug("[elementosLoadScene] Se carga la pantalla de Elementos");
         loadUI("Elementos", "ElementosController");
     }
+
+    @FXML
+    private void desplazamientosLoadScene(){
+        log.debug("[desplazamientosLoadScene] Se carga la pantalla de Desplazamientos");
+        loadUI("Desplazamientos", "DesplazamientosController");
+    }
+
 
     private void loadUI(String ui, String controller){
         Parent root = null;
@@ -149,6 +174,14 @@ public class MainController implements Initializable {
                     aController.setFileRute(this.getRutaArchivo());
                 }
                 break;
+
+                case "DesplazamientosController": {
+                    root = (VBox) loader.load();
+                    borderPane1.setCenter(root);
+                    DesplazamientosController dController = loader.getController();
+                    dController.setDesplazamientosData(desplazamientosData);
+                }
+                break;
             }
         } catch (IOException | ClassCastException e) {
             e.printStackTrace();
@@ -159,7 +192,7 @@ public class MainController implements Initializable {
 
     public void setRutaArchivo(String valor) {
         this.rutaArchivo = valor;
-        System.out.println("rutaArchivo!! ->" + this.rutaArchivo);
+        log.debug("rutaArchivo!! ->" + this.rutaArchivo);
     }
 
     public String getRutaArchivo() {

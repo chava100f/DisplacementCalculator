@@ -7,10 +7,12 @@ public class InsumoVista {
 
     private List<Nodo> lstNods;
     private List<Elemento> lstElements;
+    private List<Desplazamiento> lstDesplazamientos;
 
     public InsumoVista() {
         this.lstNods =  new ArrayList<>();
         this.lstElements = new ArrayList<>();
+        this.lstDesplazamientos = new ArrayList<>();
     }
 
     public List<Nodo> getLstNods() {
@@ -29,11 +31,20 @@ public class InsumoVista {
         this.lstElements = lstElements;
     }
 
+    public List<Desplazamiento> getLstDesplazamientos() {
+        return lstDesplazamientos;
+    }
+
+    public void setLstDesplazamientos(List<Desplazamiento> lstDesplazamientos) {
+        this.lstDesplazamientos = lstDesplazamientos;
+    }
+
     @Override
     public String toString() {
-        return "InusmoVista{" +
+        return "InsumoVista{" +
                 "lstNods=" + lstNods +
                 ", lstElements=" + lstElements +
+                ", lstDesplazamientos=" + lstDesplazamientos +
                 '}';
     }
 }
