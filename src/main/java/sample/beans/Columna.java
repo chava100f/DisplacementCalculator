@@ -1,28 +1,30 @@
 package sample.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Pilar {
+public class Columna {
 
-    private List<Integer> nodosP;
+    private List<Nodo> lstNodos;
     private List<Float> alturaZ;
     private List<Float> alturaEntreNodos;
 
-    public Pilar(List<Integer> nodosP, List<Float> alturaZ, List<Float> alturaEntreNodos) {
-        this.nodosP = nodosP;
+    public Columna(List<Nodo> lstNodos, List<Float> alturaZ, List<Float> alturaEntreNodos) {
+        this.lstNodos = lstNodos;
         this.alturaZ = alturaZ;
         this.alturaEntreNodos = alturaEntreNodos;
     }
 
-    public Pilar() {
+    public Columna() {
+        lstNodos = new ArrayList<>();
     }
 
-    public List<Integer> getNodosP() {
-        return nodosP;
+    public List<Nodo> getLstNodos() {
+        return lstNodos;
     }
 
-    public void setNodosP(List<Integer> nodosP) {
-        this.nodosP = nodosP;
+    public void setLstNodos(List<Nodo> lstNodos) {
+        this.lstNodos = lstNodos;
     }
 
     public List<Float> getAlturaZ() {
@@ -43,10 +45,20 @@ public class Pilar {
 
     @Override
     public String toString() {
-        return "Pilar{" +
-                "nodosP=" + nodosP +
+        return "Columna{" +
+                "lstNodos=" + imprimeListaNodos() +
                 ", alturaZ=" + alturaZ +
                 ", alturaEntreNodos=" + alturaEntreNodos +
                 '}';
+    }
+
+    private String imprimeListaNodos(){
+
+        String impresion = "";
+
+        for(Nodo n : lstNodos){
+            impresion += "{"+n.toString()+"} ";
+        }
+        return impresion;
     }
 }
